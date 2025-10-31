@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+  # --------------------------
+  # Apache NiFi
+  # --------------------------
+  nifi:
+    build:
+      context: .
+      dockerfile: Dockerfile.nifi
+    container_name: nifi
+    ports:
+      - "8080:8080"
+    environment:
+      - NIFI_WEB_HTTP_PORT=8080
+    volumes:
+      - ./data:/data
+      - ./spark-app:/opt/spark-app
+    depends_on:
+      - spark-master
+      - spark-worker
+      - mongo
+    networks:
+      - default
+
+  # --------------------------
+  # Apache Spark Master
+  # --------------------------
+  spark-master:
+    image: apache/spark:3.5.6
+    container_name: spark-master
+    command: >
+      /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    environment:
+      - SPARK_MODE=master
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+    ports:
+      - "7077:7077"
+      - "8081:8080"
+    volumes:
+      - ./data:/data
+      - ./spark-app:/opt/spark-app
+    networks:
+      - default
+
+  # --------------------------
+  # Apache Spark Worker
+  # --------------------------
+  spark-worker:
+    image: apache/spark:3.5.6
+    container_name: spark-worker
+    command: >
+      /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    environment:
+      - SPARK_MODE=worker
+      - SPARK_MASTER_URL=spark://spark-master:7077
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=2g
+    depends_on:
+      - spark-master
+    volumes:
+      - ./data:/data
+      - ./spark-app:/opt/spark-app
+    networks:
+      - default
+
+  # --------------------------
+  # MongoDB
+  # --------------------------
+  mongo:
+    image: mongo:6.0
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  mongo_data:

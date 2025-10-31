@@ -1,0 +1,5 @@
+*.env
+/data
+/grafana
+*.pyc
+__pycache__/
