@@ -1,9 +1,9 @@
-FROM apache/nifi:1.27.0
+FROM apache/nifi:latest
 
 USER root
 
-# Install dependencies
-RUN apt-get update && apt-get install -y openjdk-17-jdk wget tar procps python3 python3-pip && \
+# Install Python and other dependencies
+RUN apt-get update && apt-get install -y wget tar procps python3 python3-pip && \
     rm -rf /var/lib/apt/lists/*
 
 # Install Spark
@@ -13,15 +13,19 @@ RUN wget https://dlcdn.apache.org/spark/spark-${SPARK_VERSION}/spark-${SPARK_VER
     mv /opt/spark-${SPARK_VERSION}-bin-hadoop3 /opt/spark && \
     rm spark-${SPARK_VERSION}-bin-hadoop3.tgz
 
-# Install PySpark just for convenience
-RUN pip3 install pyspark
+# Install Python dependencies
+RUN python3 -m venv /opt/venv && \
+    /opt/venv/bin/pip install --upgrade pip && \
+    /opt/venv/bin/pip install pyspark
 
-# Fix permissions so NiFi can access Spark & Java
-RUN chown -R nifi:nifi /opt/spark && chmod -R 755 /opt/spark
+# Make virtual env available globally
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Set environment variables
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+# Set Spark environment variables
 ENV SPARK_HOME=/opt/spark
-ENV PATH=$SPARK_HOME/bin:$JAVA_HOME/bin:$PATH
+ENV PATH=$SPARK_HOME/bin:$PATH
+
+# Fix permissions
+RUN chown -R nifi:nifi /opt/spark && chmod -R 755 /opt/spark
 
 USER nifi

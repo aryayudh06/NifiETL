@@ -10,16 +10,15 @@ services:
       dockerfile: Dockerfile.nifi
     container_name: nifi
     ports:
-      - "8080:8080"
+      - "8443:8443"
     environment:
-      - NIFI_WEB_HTTP_PORT=8080
+      - NIFI_WEB_HTTPS_PORT=8443
     volumes:
       - ./data:/data
-      - ./spark-app:/opt/spark-app
+      - ./spark:/opt/nifi/spark
     depends_on:
       - spark-master
       - spark-worker
-      - mongo
     networks:
       - default
 
@@ -39,7 +38,7 @@ services:
       - "8081:8080"
     volumes:
       - ./data:/data
-      - ./spark-app:/opt/spark-app
+      - ./spark:/opt/nifi/spark
     networks:
       - default
 
@@ -60,26 +59,10 @@ services:
       - spark-master
     volumes:
       - ./data:/data
-      - ./spark-app:/opt/spark-app
-    networks:
-      - default
-
-  # --------------------------
-  # MongoDB
-  # --------------------------
-  mongo:
-    image: mongo:6.0
-    container_name: mongodb
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo_data:/data/db
+      - ./spark:/opt/nifi/spark
     networks:
       - default
 
 networks:
   default:
     driver: bridge
-
-volumes:
-  mongo_data:

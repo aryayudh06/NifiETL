@@ -85,8 +85,8 @@ def main(input_path, mongo_uri):
     unified_df.write \
         .format("mongodb") \
         .mode("append") \
-        .option("database", "nyc_taxi") \
-        .option("collection", "trips_2025_01") \
+        .option("database", "nyc_taxi_nifi") \
+        .option("collection", "trips_2025_01_test") \
         .save()
 
     logger.info("ETL job completed successfully!")
