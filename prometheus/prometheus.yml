@@ -6,9 +6,9 @@ scrape_configs:
     scheme: https
     metrics_path: /nifi-api/flow/metrics/prometheus
     static_configs:
-      - targets: ['nifi:8443']
+      - targets: ['localhost:8443']
     tls_config:
       insecure_skip_verify: true
     authorization:
-      credentials: "eyJraWQiOiIzMzQyY2VjMy0zMTg4LTRiZWItOWNlYi0wODE5OWJkNjcwNWMiLCJhbGciOiJFZERTQSJ9.eyJzdWIiOiI2MzJlYzhhYi0yNzNkLTQ2YWMtYWMyMi0yNWJjZjViNThiODUiLCJhdWQiOiJodHRwczovLzAuMC4wLjA6ODQ0MyIsIm5iZiI6MTc2MjgwNTM2NCwiaXNzIjoiaHR0cHM6Ly8wLjAuMC4wOjg0NDMiLCJncm91cHMiOltdLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiI2MzJlYzhhYi0yNzNkLTQ2YWMtYWMyMi0yNWJjZjViNThiODUiLCJleHAiOjE3NjI4MzQxNjQsImlhdCI6MTc2MjgwNTM2NCwianRpIjoiMDUyYTU4NDYtNjNjNi00NTczLTg1MGItZjQ0YTc2ZDU1YzA1In0.wN9kfKuqe39J7Bxjtue-1-XbLUC8ZOwxiLgSN6O8NCXMSFfzl6mVmzyv2WGBisqf6jbSdHCF2Dr-cYONqyshDg"
       type: Bearer
+      credentials: "eyJraWQiOiJhYjBlMWE2MS00YjM5LTRkYWMtODFhNi0wY2UyNzczMTA3M2YiLCJhbGciOiJFZERTQSJ9.eyJzdWIiOiI1ZTBlYjRiMS01ZDY1LTQ5NWUtOTEyNC04OTlmN2Y4NmQ3N2YiLCJhdWQiOiJodHRwczovLzAuMC4wLjA6ODQ0MyIsIm5iZiI6MTc2MjgwODE2OCwiaXNzIjoiaHR0cHM6Ly8wLjAuMC4wOjg0NDMiLCJncm91cHMiOltdLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiI1ZTBlYjRiMS01ZDY1LTQ5NWUtOTEyNC04OTlmN2Y4NmQ3N2YiLCJleHAiOjE3NjI4MzY5NjgsImlhdCI6MTc2MjgwODE2OCwianRpIjoiYzZkMDk2NGQtOTBlZi00NDViLWI3NmUtNzQzZTQwMTgzNGFkIn0.uzlCjzt7D6W649_fZgssBy7wYnuQ1GPTNft-PWuBKvKnkm7OvakJjTrujoy5d5JnMiVxrWtZ8Rmzy4du4AuoAA"
