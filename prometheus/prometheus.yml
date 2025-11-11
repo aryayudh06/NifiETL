@@ -11,4 +11,12 @@ scrape_configs:
       insecure_skip_verify: true
     authorization:
       type: Bearer
-      credentials: "eyJraWQiOiJhYjBlMWE2MS00YjM5LTRkYWMtODFhNi0wY2UyNzczMTA3M2YiLCJhbGciOiJFZERTQSJ9.eyJzdWIiOiI1ZTBlYjRiMS01ZDY1LTQ5NWUtOTEyNC04OTlmN2Y4NmQ3N2YiLCJhdWQiOiJodHRwczovLzAuMC4wLjA6ODQ0MyIsIm5iZiI6MTc2MjgwODE2OCwiaXNzIjoiaHR0cHM6Ly8wLjAuMC4wOjg0NDMiLCJncm91cHMiOltdLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiI1ZTBlYjRiMS01ZDY1LTQ5NWUtOTEyNC04OTlmN2Y4NmQ3N2YiLCJleHAiOjE3NjI4MzY5NjgsImlhdCI6MTc2MjgwODE2OCwianRpIjoiYzZkMDk2NGQtOTBlZi00NDViLWI3NmUtNzQzZTQwMTgzNGFkIn0.uzlCjzt7D6W649_fZgssBy7wYnuQ1GPTNft-PWuBKvKnkm7OvakJjTrujoy5d5JnMiVxrWtZ8Rmzy4du4AuoAA"
+      credentials: "eyJraWQiOiI1NTYyMjc2NS00YzBlLTRhNTktYTRjMS04NzEzZjQzMmM1ZTciLCJhbGciOiJFZERTQSJ9.eyJzdWIiOiJhZjc4ODQwMC05MGZiLTRlM2QtOWE0Yi1iMWM0ZDgxZjY2MjEiLCJhdWQiOiJodHRwczovLzAuMC4wLjA6ODQ0MyIsIm5iZiI6MTc2Mjg4NzcxOSwiaXNzIjoiaHR0cHM6Ly8wLjAuMC4wOjg0NDMiLCJncm91cHMiOltdLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJhZjc4ODQwMC05MGZiLTRlM2QtOWE0Yi1iMWM0ZDgxZjY2MjEiLCJleHAiOjE3NjI5MTY1MTksImlhdCI6MTc2Mjg4NzcxOSwianRpIjoiNTY2MDAwNGItMjU2MS00NThkLWE0YjItOTEwMTc1MjkwZWZjIn0.68P0hL6YAsIrqgh0CwgWXEsfhtMRYAkQTYPQiMEopCtk87yEe6myp83c7VtQX8tySwPj979FLqQ7xMoan4P3Dw"
+  
+  - job_name: 'node'
+    static_configs:
+      - targets: ['node-exporter:9100']
+  
+  - job_name: 'statsd'
+    static_configs:
+      - targets: ['statsd-exporter:9102']

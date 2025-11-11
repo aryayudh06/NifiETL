@@ -70,10 +70,13 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
       - prometheus-data-nifi:/prometheus
+    extra_hosts:
+      - "localhost:172.18.0.8"
     ports:
       - "9090:9090"
     networks:
       - default
+    
 
   grafana:
     image: grafana/grafana:latest
