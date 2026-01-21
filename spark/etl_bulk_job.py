@@ -42,10 +42,10 @@ def main(input_path, output_uri):
         .getOrCreate()
 
     # Read CSV files
-    df_fhv = spark.read.option("header", "true").option("inferSchema", "true").csv(f"{input_path}/fhv_tripdata_2025-*.csv")
-    df_green = spark.read.option("header", "true").option("inferSchema", "true").csv(f"{input_path}/green_tripdata_2025-*.csv")
-    df_yellow = spark.read.option("header", "true").option("inferSchema", "true").csv(f"{input_path}/yellow_tripdata_2025-*.csv")
-    df_fhvhv = spark.read.option("header", "true").option("inferSchema", "true").csv(f"{input_path}/fhvhv_tripdata_2025-*.csv")
+    df_fhv = spark.read.option("header", "true").option("inferSchema", "true").csv(f"{input_path}/*/fhv_tripdata_2025-*.csv")
+    df_green = spark.read.option("header", "true").option("inferSchema", "true").csv(f"{input_path}/*/green_tripdata_2025-*.csv")
+    df_yellow = spark.read.option("header", "true").option("inferSchema", "true").csv(f"{input_path}/*/yellow_tripdata_2025-*.csv")
+    df_fhvhv = spark.read.option("header", "true").option("inferSchema", "true").csv(f"{input_path}/*/fhvhv_tripdata_2025-*.csv")
 
     # Log counts
     logger.info(f"Initial counts - FHV: {df_fhv.count()}, Green: {df_green.count()}, Yellow: {df_yellow.count()}, FHVHV: {df_fhvhv.count()}")
